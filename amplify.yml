@@ -5,7 +5,8 @@ frontend:
       commands:
         - nvm install 20
         - nvm use 20
-        - npm ci
+        - npm install -g npm@10.8.2  # Versión específica, más estable
+        - if [ -d "node_modules" ]; then npm install --legacy-peer-deps --prefer-offline; else npm ci --legacy-peer-deps --prefer-offline; fi
     build:
       commands:
         - npm run build
@@ -16,3 +17,5 @@ frontend:
   cache:
     paths:
       - node_modules/**/*
+      - .npm/**/*
+      - .cache/**/*

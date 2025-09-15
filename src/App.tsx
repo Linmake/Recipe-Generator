@@ -17,7 +17,6 @@ const amplifyClient = generateClient<Schema>({
 function App() {
   const [result, setResult] = useState<string>("");
   const [loading, setLoading] = useState(false);
-
   const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setLoading(true);
@@ -37,7 +36,6 @@ function App() {
       setLoading(false);
     }
   };
-
   return (
     <div className="app-container">
       <div className="header-container">
@@ -82,5 +80,4 @@ function App() {
     </div>
   );
 }
-
 export default App;

@@ -1,16 +1,18 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
+import { resolve } from 'path'
 
 export default defineConfig({
   plugins: [react()],
   resolve: {
     dedupe: ['react', 'react-dom'],
     alias: {
-      // Agrega estos alias para las importaciones de Amplify
-      'aws-amplify': 'aws-amplify',
-      '@aws-amplify/core': '@aws-amplify/core',
-      '@aws-amplify/auth': '@aws-amplify/auth',
-      '@aws-amplify/storage': '@aws-amplify/storage'
+      // Corrige estos alias para que apunten a los archivos correctos
+      'aws-amplify': resolve(__dirname, 'node_modules/aws-amplify/dist/esm/index.mjs'),
+      '@aws-amplify/core': resolve(__dirname, 'node_modules/@aws-amplify/core/dist/esm/index.mjs'),
+      '@aws-amplify/auth': resolve(__dirname, 'node_modules/@aws-amplify/auth/dist/esm/index.mjs'),
+      '@aws-amplify/storage': resolve(__dirname, 'node_modules/@aws-amplify/storage/dist/esm/index.mjs'),
+      '@aws-amplify/ui': resolve(__dirname, 'node_modules/@aws-amplify/ui/dist/esm/index.mjs')
     }
   },
   optimizeDeps: {
@@ -24,7 +26,11 @@ export default defineConfig({
   },
   build: {
     commonjsOptions: {
-      include: [/node_modules/]
+      include: [/node_modules/],
+      transformMixedEsModules: true
+    },
+    rollupOptions: {
+      external: ['react', 'react-dom']
     }
   }
 })
